@@ -1,7 +1,33 @@
 @(message: String)
 
-@main("Welcome to Play") {
+@main("Lake of Words") {
 
-    @play20.welcome(message, style = "Java")
+  <h1 class="text-center" style="font-size:50px;">Neutral</h1>
+    
+  <form class="form-inline text-center" role="form" style="margin-top:3.0em;" action="@routes.Application.post()" method="POST">
+    <div class="form-group">
+      <div class="input-group">
+      <label class="sr-only" for="comment">Your comment</label>
+      <input type="text" class="form-control input-sm" id="comment" placeholder="Comment">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Throw</button>
+  </form>
+  
+  <div class="container text-center" style="margin-top:3.0em;">
+    <p style="font-size:40px;">テスト…</p>
+    <p style="font-size:35px;">テスト2…</p>
+    <p style="font-size:30px;">テスト…</p>
+    <p style="font-size:26px;">ぐわーーーーー</p>
+    <p style="font-size:23px;">テスト…</p>
+    <p style="font-size:20px;">テスト…</p>
+    <p style="font-size:18px;">テスト…</p>
+    <p style="font-size:16px;">テスト…</p>
+    <p style="font-size:14px;">テスト…</p>
+    <p style="font-size:12px;">テスト…</p>
+    <p style="font-size:12px;">テスト…</p>
+    <p style="font-size:12px;">テスト…</p>
+    <p style="font-size:12px;">These are mockup.</p>
+  </div>
 
 }
