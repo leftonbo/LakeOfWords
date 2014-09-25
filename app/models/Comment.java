@@ -30,7 +30,8 @@ public class Comment extends Model {
     @Constraints.Required
 	public String text;
     
-    public int color;
+    public int color1;
+    public int color2;
     
     public String emotion;
 
@@ -50,10 +51,12 @@ public class Comment extends Model {
 			return newc;
 		} else if (apiCRes == -2) {
 			// Color Not Found
-			newc.color = 0x808080;
+			newc.color1 = 0x808080;
+			newc.color2 = 0x000000;
 		} else {
 			// OK
-			newc.color = apiColor.colors.get(0);
+			newc.color1 = apiColor.colors.get(0);
+			newc.color2 = apiColor.colors.get(1);
 		}
 		
 		// Word API
