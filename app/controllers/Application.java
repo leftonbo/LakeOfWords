@@ -31,6 +31,20 @@ public class Application extends Controller {
     	
     	Comment newCom = Comment.makeComment(fc.comment);
     	
+    	boolean fail = false;
+    	switch (newCom.result) {
+    	case -1:
+    		Application.flash("danger", "Post Failed - Encode was failed.");
+    		fail = true; 		break;
+    	case -2:
+    		Application.flash("danger", "Post Failed - an API has occured an error.");
+    		fail = true; 		break;
+    	}
+    	
+    	if (fail) {
+            return internalServerError(index.render(fm));
+    	}
+    	
         return TODO;
     }
 

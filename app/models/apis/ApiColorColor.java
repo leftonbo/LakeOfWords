@@ -1,7 +1,5 @@
 package models.apis;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,24 +12,22 @@ import play.libs.ws.WSResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class ColorColor {
+public class ApiColorColor {
 
 	public String request;
 	public int result;
 	public List<Integer> colors;
 	
-	public ColorColor(String req) {
+	public ApiColorColor(String req) {
 		request = req;
 	}
 	
-	public int Send() throws UnsupportedEncodingException {
+	public int Send() {
 		colors = new ArrayList<Integer>();
-
-		StringBuilder builder = new StringBuilder();
-		builder.append("http://synthsky.com/iroiro/q?format=json&req=");
-		builder.append(URLEncoder.encode(request,"utf-8"));
 		
-		WSRequestHolder holder = WS.url(builder.toString());
+		WSRequestHolder holder = WS.url("http://synthsky.com/iroiro/q")
+				.setQueryParameter("format", "json")
+				.setQueryParameter("req", request);
 		
 		Promise<Integer> promRes = holder.get().map(
 			    new Function<WSResponse, Integer>() {
