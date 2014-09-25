@@ -14,7 +14,7 @@ public class ValueGlobal extends Model {
 	
 	public String state;
     
-    public Long backColor;
-    public Long TitleColor;
+    public int backColor;
+    public int TitleColor;
     
 }

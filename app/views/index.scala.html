@@ -1,16 +1,13 @@
-@(message: String)
+@(fm:Form[forms.FormComment])
+
+@implicitFieldConstructor = @{ helper.FieldConstructor(parts.InputComment.render) }
 
 @main("Lake of Words") {
 
   <h1 class="text-center" style="font-size:50px;">Neutral</h1>
     
   <form class="form-inline text-center" role="form" style="margin-top:3.0em;" action="@routes.Application.post()" method="POST">
-    <div class="form-group">
-      <div class="input-group">
-      <label class="sr-only" for="comment">Your comment</label>
-      <input type="text" class="form-control input-sm" id="comment" placeholder="Comment">
-      </div>
-    </div>
+    @helper.inputText(fm("comment"), '_label->"Comment", '_help -> "", 'class->"form-control input-sm", 'placeholder->"Your comment", 'style->"width:300px")
     <button type="submit" class="btn btn-primary">Throw</button>
   </form>
   

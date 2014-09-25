@@ -1,0 +1,14 @@
+@(elements: helper.FieldElements)
+
+@***************************************************
+* Generate input according twitter bootstrap rules *
+***************************************************@
+
+<div class="form-group @if(elements.hasErrors) {has-error}">
+  <div class="input-group">
+    <label for="@elements.id" class="sr-only">@elements.label</label>
+    @elements.input
+    <span class="help-inline">@elements.infos.mkString(", ")</span>
+    <span class="help-inline text-danger">@elements.errors.mkString(", ")</span>
+  </div>
+</div>

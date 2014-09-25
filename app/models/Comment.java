@@ -1,7 +1,10 @@
 package models;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.persistence.Id;
 
+import models.apis.ColorColor;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -15,10 +18,26 @@ public class Comment extends Model {
     @Constraints.Required
 	public String text;
     
-    public Long color;
+    public int color;
     
     public double like;
     public double positive;
     public double aggresive;
     
+    
+    public static Comment makeComment(String t) {
+    	Comment newc = new Comment();
+    	newc.text = t;
+    	
+    	ColorColor api = new ColorColor(t);
+    	try {
+			int apiRes = api.Send();
+			if (apiRes != 0) return null;
+			newc.color = api.colors.get(0);
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
+    	
+    	return newc;
+    }
 }
