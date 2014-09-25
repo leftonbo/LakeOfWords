@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index()
 
 # Throw Comment
-GET     /post                       controllers.Application.index()
+GET     /post                       controllers.Application.go_home()
 POST    /post                       controllers.Application.post()
 
 # Map static resources from the /public folder to the /assets URL path
