@@ -11,7 +11,10 @@ public class ValueGlobal extends Model {
 
 	@Id
 	public Long id;
+	
+	public String state;
     
     public Long backColor;
+    public Long TitleColor;
     
 }
