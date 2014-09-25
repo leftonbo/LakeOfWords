@@ -1,8 +1,12 @@
 package models;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Version;
+
+import com.avaje.ebean.annotation.CreatedTimestamp;
 
 import models.apis.ColorColor;
 import play.data.validation.Constraints;
@@ -14,6 +18,11 @@ public class Comment extends Model {
 
 	@Id
 	public Long id;
+	
+    @CreatedTimestamp
+    public Date createDate;
+    @Version
+    public Date updateDate;
 
     @Constraints.Required
 	public String text;
