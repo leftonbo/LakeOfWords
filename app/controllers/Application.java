@@ -1,6 +1,9 @@
 package controllers;
 
 import static play.data.Form.form;
+
+import java.util.List;
+
 import models.Comment;
 import models.forms.FormComment;
 import play.data.Form;
@@ -13,7 +16,7 @@ public class Application extends Controller {
 
     public static Result index() {
     	Form<FormComment> fm = form(FormComment.class);
-        return ok(index.render(fm));
+        return ok(index.render(fm, getComments()));
     }
     
     public static Result go_home() {
@@ -24,7 +27,7 @@ public class Application extends Controller {
     	Form<FormComment> fm = form(FormComment.class).bindFromRequest();
     	
     	if (fm.hasErrors()) {
-            return badRequest(index.render(fm));
+            return badRequest(index.render(fm, getComments()));
     	}
     	
     	FormComment fc = fm.get();
@@ -42,10 +45,17 @@ public class Application extends Controller {
     	}
     	
     	if (fail) {
-            return internalServerError(index.render(fm));
+            return internalServerError(index.render(fm, getComments()));
     	}
     	
-        return TODO;
+    	// Save
+    	newCom.save();
+    	
+        return GO_HOME;
+    }
+    
+    public static List<Comment> getComments() {
+    	return Comment.all();
     }
 
 }

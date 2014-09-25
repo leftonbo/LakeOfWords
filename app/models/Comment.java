@@ -1,7 +1,9 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -15,6 +17,7 @@ import models.apis.ApiWord;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
+@Entity
 public class Comment extends Model {
 	
 	private static final long serialVersionUID = 7044837608968677484L;
@@ -32,11 +35,24 @@ public class Comment extends Model {
     
     public int color1;
     public int color2;
+    public int color3;
     
     public String emotion;
 
     @Transient
     public int result;
+    
+    public String getColor1String() {
+    	return String.format("#%06X", color1);
+    }
+    public String getColor2String() {
+    	return String.format("#%06X", color2);
+    }
+    public String getColor3String() {
+    	return String.format("#%06X", color3);
+    }
+    
+    // ==============================================================
     
     public static Comment makeComment(String t) {
     	Comment newc = new Comment();
@@ -56,7 +72,16 @@ public class Comment extends Model {
 		} else {
 			// OK
 			newc.color1 = apiColor.colors.get(0);
-			newc.color2 = apiColor.colors.get(1);
+			if (apiColor.colors.size() > 1) {
+				newc.color2 = apiColor.colors.get(1);
+			} else {
+				newc.color2 = apiColor.colors.get(0);
+			}
+			if (apiColor.colors.size() > 2) {
+				newc.color3 = apiColor.colors.get(2);
+			} else {
+				newc.color3 = apiColor.colors.get(0);
+			}
 		}
 		
 		// Word API
@@ -72,5 +97,36 @@ public class Comment extends Model {
 		}
     	
     	return newc;
+    }
+    
+	/**
+	 * The Finder
+	 */
+    public static final Finder<Long,Comment> find =
+    	new Finder<Long,Comment>(Long.class, Comment.class);
+
+	public static final List<Comment> all() {
+		return find.orderBy("createDate desc").findList();
+	}
+	
+    public static int getSizeByIndex(int i) {
+    	switch (i) {
+    	case  0:		return 45;
+    	case  1:		return 40;
+    	case  2:		return 36;
+    	case  3:		return 32;
+    	case  4:		return 29;
+    	case  5:		return 26;
+    	case  6:		return 24;
+    	case  7:		return 22;
+    	case  8:		return 20;
+    	case  9:		return 18;
+    	case 10:		return 17;
+    	case 11:		return 16;
+    	case 12:		return 15;
+    	case 13:		return 14;
+    	case 14:		return 13;
+    	}
+    	return 12;
     }
 }

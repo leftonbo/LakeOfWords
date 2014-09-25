@@ -1,6 +1,21 @@
-@(fm:Form[forms.FormComment])
+@(fm:Form[forms.FormComment], coms:List[Comment])
 
 @implicitFieldConstructor = @{ helper.FieldConstructor(parts.InputComment.render) }
+
+@colorStyle(c:Comment) = {
+	color:@{c.getColor2String()};
+    text-shadow:
+        0 1px 0 @{c.getColor1String()},
+        1px 0 0 @{c.getColor1String()},
+        0 -1px 0 @{c.getColor1String()},
+        -1px 0 0 @{c.getColor1String()},
+        -1px -1px 0 @{c.getColor1String()},
+        1px -1px 0 @{c.getColor1String()},
+        -1px 1px 0 @{c.getColor1String()},
+        1px 1px 0 @{c.getColor1String()},
+        0px 0px 30px @{c.getColor3String()}
+        ;
+}
 
 @main("Lake of Words") {
 
@@ -12,19 +27,9 @@
   </form>
   
   <div class="container text-center" style="margin-top:3.0em;">
-    <p style="font-size:40px;">テスト…</p>
-    <p style="font-size:35px;">テスト2…</p>
-    <p style="font-size:30px;">テスト…</p>
-    <p style="font-size:26px;">ぐわーーーーー</p>
-    <p style="font-size:23px;">テスト…</p>
-    <p style="font-size:20px;">テスト…</p>
-    <p style="font-size:18px;">テスト…</p>
-    <p style="font-size:16px;">テスト…</p>
-    <p style="font-size:14px;">テスト…</p>
-    <p style="font-size:12px;">テスト…</p>
-    <p style="font-size:12px;">テスト…</p>
-    <p style="font-size:12px;">テスト…</p>
-    <p style="font-size:12px;">These are mockup.</p>
+    @for((c, i) <- coms.zipWithIndex) {
+      <p style="font-size:@{Comment.getSizeByIndex(i)}px;@colorStyle(c)">@c.text</p>
+    }
   </div>
 
 }
