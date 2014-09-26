@@ -56,10 +56,15 @@ public class Application extends Controller {
     	gv.changeColors(newCom.color3, newCom.emotion);
     	gv.save();
     	
-    	play.Logger.debug("col"+Comment.find.findRowCount());
+    	//play.Logger.debug("col"+Comment.find.findRowCount());
     	
-    	if (Comment.find.findRowCount() > 100) {
-    		
+    	if (Comment.find.findRowCount() > 500) {
+    		// 古いものを削除
+    		List<Comment> sibou = Comment.needKillLog();
+    		for (Comment c : sibou) {
+    			play.Logger.debug("Byebye, "+c.text+" !");
+    			c.delete();
+    		}
     	}
     	
     	// Save
@@ -69,7 +74,7 @@ public class Application extends Controller {
     }
     
     public static List<Comment> getComments() {
-    	return Comment.all();
+    	return Comment.last100();
     }
 
 }

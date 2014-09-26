@@ -110,6 +110,12 @@ public class Comment extends Model {
 	public static final List<Comment> all() {
 		return find.orderBy("createDate desc").findList();
 	}
+	public static final List<Comment> last100() {
+		return find.orderBy("createDate desc").findPagingList(100).getPage(0).getList();
+	}
+	public static final List<Comment> needKillLog() {
+		return find.orderBy("createDate desc").findPagingList(500).getPage(1).getList();
+	}
 	
     public static int getSizeByIndex(int i) {
     	switch (i) {
@@ -121,28 +127,38 @@ public class Comment extends Model {
     	case  5:		return 30;
     	case  6:		return 28;
     	case  7:		return 26;
-    	case  8:		return 24;
-    	case  9:		return 22;
-    	case 10:		return 20;
-    	case 11:		return 19;
-    	case 12:		return 18;
-    	case 13:		return 17;
-    	case 14:		return 16;
-    	case 15:		return 16;
-    	case 16:		return 15;
-    	case 17:		return 15;
-    	case 18:		return 14;
-    	case 19:		return 14;
-    	case 20:		return 14;
-    	case 21:		return 13;
-    	case 22:		return 13;
-    	case 23:		return 13;
-    	case 24:		return 12;
-    	case 25:		return 12;
-    	case 26:		return 12;
-    	case 27:		return 11;
-    	case 28:		return 11;
-    	case 29:		return 11;
+    	case  8:		return 25;
+    	case  9:		return 24;
+    	case 10:		return 23;
+    	case 11:		return 22;
+    	case 12:		return 21;
+    	case 13:		return 20;
+    	case 14:		return 19;
+    	case 15:		return 19;
+    	case 16:		return 18;
+    	case 17:		return 18;
+    	case 18:		return 17;
+    	case 19:		return 17;
+    	case 20:		return 16;
+    	case 21:		return 16;
+    	case 22:		return 15;
+    	case 23:		return 15;
+    	case 24:		return 15;
+    	case 25:		return 14;
+    	case 26:		return 14;
+    	case 27:		return 14;
+    	case 28:		return 13;
+    	case 29:		return 13;
+    	case 30:		return 13;
+    	case 31:		return 13;
+    	case 32:		return 12;
+    	case 33:		return 12;
+    	case 34:		return 12;
+    	case 35:		return 12;
+    	case 36:		return 11;
+    	case 37:		return 11;
+    	case 38:		return 11;
+    	case 39:		return 11;
     	}
     	return 10;
     }
@@ -150,8 +166,8 @@ public class Comment extends Model {
     public static double getOpacityByIndex(int i) {
     	double opa = 1;
     	
-    	if (i > 50) {
-    		opa = 1.0 - 0.995 * ((i-50.0)/50);
+    	if (i > 30) {
+    		opa = 1.0 - 0.99 * ((i-30.0)/70);
     	}
     	
     	return opa;
@@ -160,6 +176,7 @@ public class Comment extends Model {
     public static String getOpacityStringByIndex(int i) {
     	double opa = getOpacityByIndex(i);
     	if (opa >= 1) return "";
+    	if (opa < 0) opa = 0;
     	return String.format("filter:alpha(opacity=%f);-moz-opacity:%f;opacity:%f;"
     			, opa*100,opa,opa);
     }
