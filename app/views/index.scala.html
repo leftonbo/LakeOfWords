@@ -34,7 +34,7 @@
   
   <div class="container text-center" style="margin-top:3.0em;">
     @for((c, i) <- coms.zipWithIndex) {
-      <p style="font-size:@{Comment.getSizeByIndex(i)}px;@colorStyle(c)">@c.text</p>
+      <p style="font-size:@{Comment.getSizeByIndex(i)}px;@{colorStyle(c)}@{Comment.getOpacityStringByIndex(i)}">@c.text</p>
     }
   </div>
 

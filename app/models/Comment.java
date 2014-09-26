@@ -114,26 +114,53 @@ public class Comment extends Model {
     public static int getSizeByIndex(int i) {
     	switch (i) {
     	case  0:		return 45;
-    	case  1:		return 40;
-    	case  2:		return 36;
-    	case  3:		return 32;
-    	case  4:		return 29;
-    	case  5:		return 26;
-    	case  6:		return 24;
-    	case  7:		return 22;
-    	case  8:		return 20;
-    	case  9:		return 18;
-    	case 10:		return 17;
-    	case 11:		return 16;
-    	case 12:		return 15;
-    	case 13:		return 14;
-    	case 14:		return 13;
-    	case 15:		return 13;
-    	case 16:		return 12;
-    	case 17:		return 12;
-    	case 18:		return 11;
-    	case 19:		return 11;
+    	case  1:		return 42;
+    	case  2:		return 39;
+    	case  3:		return 36;
+    	case  4:		return 33;
+    	case  5:		return 30;
+    	case  6:		return 28;
+    	case  7:		return 26;
+    	case  8:		return 24;
+    	case  9:		return 22;
+    	case 10:		return 20;
+    	case 11:		return 19;
+    	case 12:		return 18;
+    	case 13:		return 17;
+    	case 14:		return 16;
+    	case 15:		return 16;
+    	case 16:		return 15;
+    	case 17:		return 15;
+    	case 18:		return 14;
+    	case 19:		return 14;
+    	case 20:		return 14;
+    	case 21:		return 13;
+    	case 22:		return 13;
+    	case 23:		return 13;
+    	case 24:		return 12;
+    	case 25:		return 12;
+    	case 26:		return 12;
+    	case 27:		return 11;
+    	case 28:		return 11;
+    	case 29:		return 11;
     	}
     	return 10;
+    }
+	
+    public static double getOpacityByIndex(int i) {
+    	double opa = 1;
+    	
+    	if (i > 50) {
+    		opa = 1.0 - 0.995 * ((i-50.0)/50);
+    	}
+    	
+    	return opa;
+    }
+	
+    public static String getOpacityStringByIndex(int i) {
+    	double opa = getOpacityByIndex(i);
+    	if (opa >= 1) return "";
+    	return String.format("filter:alpha(opacity=%f);-moz-opacity:%f;opacity:%f;"
+    			, opa*100,opa,opa);
     }
 }

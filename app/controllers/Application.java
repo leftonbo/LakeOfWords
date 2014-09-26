@@ -56,6 +56,12 @@ public class Application extends Controller {
     	gv.changeColors(newCom.color3, newCom.emotion);
     	gv.save();
     	
+    	play.Logger.debug("col"+Comment.find.findRowCount());
+    	
+    	if (Comment.find.findRowCount() > 100) {
+    		
+    	}
+    	
     	// Save
     	newCom.save();
     	
