@@ -69,16 +69,18 @@ public class Comment extends Model {
 			// Color Not Found
 			newc.color1 = 0x808080;
 			newc.color2 = 0x000000;
+			newc.color3 = 0x808080;
 		} else {
 			// OK
-			newc.color1 = apiColor.colors.get(0);
-			if (apiColor.colors.size() > 1) {
-				newc.color2 = apiColor.colors.get(1);
+			int colnum = apiColor.colors.size();
+			newc.color1 = apiColor.colors.get(colnum-1);
+			if (colnum > 1) {
+				newc.color2 = apiColor.colors.get(colnum-2);
 			} else {
 				newc.color2 = apiColor.colors.get(0);
 			}
-			if (apiColor.colors.size() > 2) {
-				newc.color3 = apiColor.colors.get(2);
+			if (colnum > 2) {
+				newc.color3 = apiColor.colors.get(colnum-3);
 			} else {
 				newc.color3 = apiColor.colors.get(0);
 			}
@@ -126,7 +128,12 @@ public class Comment extends Model {
     	case 12:		return 15;
     	case 13:		return 14;
     	case 14:		return 13;
+    	case 15:		return 13;
+    	case 16:		return 12;
+    	case 17:		return 12;
+    	case 18:		return 11;
+    	case 19:		return 11;
     	}
-    	return 12;
+    	return 10;
     }
 }
