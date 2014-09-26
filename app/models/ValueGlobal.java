@@ -29,7 +29,7 @@ public class ValueGlobal extends Model {
 
     public void changeColors(int auraCol, String emo) {
     	
-    	backColor = Color.blendWith(auraCol, backColor, 0.1).encode();
+    	backColor = Color.blendWith(auraCol, backColor, 0.2).encode();
     	
     	if (emo != null && emo != "") {
     		// Color API
