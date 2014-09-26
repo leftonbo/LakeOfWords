@@ -5,6 +5,7 @@ import static play.data.Form.form;
 import java.util.List;
 
 import models.Comment;
+import models.ValueGlobal;
 import models.forms.FormComment;
 import play.data.Form;
 import play.mvc.*;
@@ -16,7 +17,9 @@ public class Application extends Controller {
 
     public static Result index() {
     	Form<FormComment> fm = form(FormComment.class);
-        return ok(index.render(fm, getComments()));
+    	ValueGlobal gv = ValueGlobal.getGVal();
+    	
+        return ok(index.render(fm, gv, getComments()));
     }
     
     public static Result go_home() {
@@ -25,9 +28,10 @@ public class Application extends Controller {
     
     public static Result post() {
     	Form<FormComment> fm = form(FormComment.class).bindFromRequest();
+    	ValueGlobal gv = ValueGlobal.getGVal();
     	
     	if (fm.hasErrors()) {
-            return badRequest(index.render(fm, getComments()));
+            return badRequest(index.render(fm, gv, getComments()));
     	}
     	
     	FormComment fc = fm.get();
@@ -45,7 +49,22 @@ public class Application extends Controller {
     	}
     	
     	if (fail) {
-            return internalServerError(index.render(fm, getComments()));
+            return internalServerError(index.render(fm, gv, getComments()));
+    	}
+    	
+    	// Update Global Value
+    	gv.changeColors(newCom.color3, newCom.emotion);
+    	gv.save();
+    	
+    	//play.Logger.debug("col"+Comment.find.findRowCount());
+    	
+    	if (Comment.find.findRowCount() > 500) {
+    		// 古いものを削除
+    		List<Comment> sibou = Comment.needKillLog();
+    		for (Comment c : sibou) {
+    			play.Logger.debug("Byebye, "+c.text+" !");
+    			c.delete();
+    		}
     	}
     	
     	// Save
@@ -55,7 +74,7 @@ public class Application extends Controller {
     }
     
     public static List<Comment> getComments() {
-    	return Comment.all();
+    	return Comment.last100();
     }
 
 }

@@ -69,16 +69,18 @@ public class Comment extends Model {
 			// Color Not Found
 			newc.color1 = 0x808080;
 			newc.color2 = 0x000000;
+			newc.color3 = 0x808080;
 		} else {
 			// OK
-			newc.color1 = apiColor.colors.get(0);
-			if (apiColor.colors.size() > 1) {
-				newc.color2 = apiColor.colors.get(1);
+			int colnum = apiColor.colors.size();
+			newc.color1 = apiColor.colors.get(colnum-1);
+			if (colnum > 1) {
+				newc.color2 = apiColor.colors.get(colnum-2);
 			} else {
 				newc.color2 = apiColor.colors.get(0);
 			}
-			if (apiColor.colors.size() > 2) {
-				newc.color3 = apiColor.colors.get(2);
+			if (colnum > 2) {
+				newc.color3 = apiColor.colors.get(colnum-3);
 			} else {
 				newc.color3 = apiColor.colors.get(0);
 			}
@@ -108,25 +110,74 @@ public class Comment extends Model {
 	public static final List<Comment> all() {
 		return find.orderBy("createDate desc").findList();
 	}
+	public static final List<Comment> last100() {
+		return find.orderBy("createDate desc").findPagingList(100).getPage(0).getList();
+	}
+	public static final List<Comment> needKillLog() {
+		return find.orderBy("createDate desc").findPagingList(500).getPage(1).getList();
+	}
 	
     public static int getSizeByIndex(int i) {
     	switch (i) {
     	case  0:		return 45;
-    	case  1:		return 40;
-    	case  2:		return 36;
-    	case  3:		return 32;
-    	case  4:		return 29;
-    	case  5:		return 26;
-    	case  6:		return 24;
-    	case  7:		return 22;
-    	case  8:		return 20;
-    	case  9:		return 18;
-    	case 10:		return 17;
-    	case 11:		return 16;
-    	case 12:		return 15;
-    	case 13:		return 14;
-    	case 14:		return 13;
+    	case  1:		return 42;
+    	case  2:		return 39;
+    	case  3:		return 36;
+    	case  4:		return 33;
+    	case  5:		return 30;
+    	case  6:		return 28;
+    	case  7:		return 26;
+    	case  8:		return 25;
+    	case  9:		return 24;
+    	case 10:		return 23;
+    	case 11:		return 22;
+    	case 12:		return 21;
+    	case 13:		return 20;
+    	case 14:		return 19;
+    	case 15:		return 19;
+    	case 16:		return 18;
+    	case 17:		return 18;
+    	case 18:		return 17;
+    	case 19:		return 17;
+    	case 20:		return 16;
+    	case 21:		return 16;
+    	case 22:		return 15;
+    	case 23:		return 15;
+    	case 24:		return 15;
+    	case 25:		return 14;
+    	case 26:		return 14;
+    	case 27:		return 14;
+    	case 28:		return 13;
+    	case 29:		return 13;
+    	case 30:		return 13;
+    	case 31:		return 13;
+    	case 32:		return 12;
+    	case 33:		return 12;
+    	case 34:		return 12;
+    	case 35:		return 12;
+    	case 36:		return 11;
+    	case 37:		return 11;
+    	case 38:		return 11;
+    	case 39:		return 11;
     	}
-    	return 12;
+    	return 10;
+    }
+	
+    public static double getOpacityByIndex(int i) {
+    	double opa = 1;
+    	
+    	if (i > 30) {
+    		opa = 1.0 - 0.99 * ((i-30.0)/70);
+    	}
+    	
+    	return opa;
+    }
+	
+    public static String getOpacityStringByIndex(int i) {
+    	double opa = getOpacityByIndex(i);
+    	if (opa >= 1) return "";
+    	if (opa < 0) opa = 0;
+    	return String.format("filter:alpha(opacity=%f);-moz-opacity:%f;opacity:%f;"
+    			, opa*100,opa,opa);
     }
 }

@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, bcol: String)(content: Html)
 
 <!DOCTYPE html>
 
@@ -14,7 +14,7 @@
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
     </head>
-    <body role="document">
+    <body role="document" style="background-color:@{bcol};">
     <div class="container theme-showcase" role="main">
       @content
     </div>

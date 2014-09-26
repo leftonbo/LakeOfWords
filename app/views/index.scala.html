@@ -1,4 +1,4 @@
-@(fm:Form[forms.FormComment], coms:List[Comment])
+@(fm:Form[forms.FormComment], gv:ValueGlobal, coms:List[Comment])
 
 @implicitFieldConstructor = @{ helper.FieldConstructor(parts.InputComment.render) }
 
@@ -13,13 +13,19 @@
         1px -1px 0 @{c.getColor1String()},
         -1px 1px 0 @{c.getColor1String()},
         1px 1px 0 @{c.getColor1String()},
-        0px 0px 30px @{c.getColor3String()}
+        0px 0px 30px @{c.getColor3String()},
+        0px 0px 5px @{c.getColor3String()}
         ;
 }
+@titleStyle() = {
+    text-shadow:
+        0px 0px 30px @{gv.strTCol()},
+        0px 0px 4px @{gv.strTCol()};
+}
 
-@main("Lake of Words") {
+@main("Lake of Words", gv.strBCol()) {
 
-  <h1 class="text-center" style="font-size:50px;">Neutral</h1>
+  <h1 class="text-center" style="font-size:50px;@{titleStyle()}">Lake of Words</h1>
     
   <form class="form-inline text-center" role="form" style="margin-top:3.0em;" action="@routes.Application.post()" method="POST">
     @helper.inputText(fm("comment"), '_label->"Comment", '_help -> "", 'class->"form-control input-sm", 'placeholder->"Your comment", 'style->"width:300px")
@@ -28,7 +34,7 @@
   
   <div class="container text-center" style="margin-top:3.0em;">
     @for((c, i) <- coms.zipWithIndex) {
-      <p style="font-size:@{Comment.getSizeByIndex(i)}px;@colorStyle(c)">@c.text</p>
+      <p style="font-size:@{Comment.getSizeByIndex(i)}px;@{colorStyle(c)}@{Comment.getOpacityStringByIndex(i)}">@c.text</p>
     }
   </div>
 
